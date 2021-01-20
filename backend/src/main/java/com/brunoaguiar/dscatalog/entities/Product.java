@@ -24,7 +24,7 @@ public class Product  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	//use this for descrption to accept long text
+	//use this for description to accept long text
 	@Column(columnDefinition = "TEXT")
 	private	String description;
 	private	Double	price;
