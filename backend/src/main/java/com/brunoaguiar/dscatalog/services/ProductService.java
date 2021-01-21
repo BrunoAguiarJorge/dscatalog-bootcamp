@@ -12,8 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.brunoaguiar.dscatalog.dto.CategoryDTO;
 import com.brunoaguiar.dscatalog.dto.ProductDTO;
+import com.brunoaguiar.dscatalog.entities.Category;
 import com.brunoaguiar.dscatalog.entities.Product;
+import com.brunoaguiar.dscatalog.repositories.CategoryRepository;
 import com.brunoaguiar.dscatalog.repositories.ProductRepository;
 import com.brunoaguiar.dscatalog.resources.exceptions.DataBaseException;
 import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -25,6 +28,9 @@ public class ProductService {
 	//connect this service class to the categoryRepository class to fetch information from repository class 
 	@Autowired
 	private ProductRepository repository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
@@ -43,7 +49,7 @@ public class ProductService {
 	@Transactional
 	public ProductDTO insert(ProductDTO dto) {
 		Product entity = new Product();
-		//entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new ProductDTO(entity);
 	}
@@ -52,7 +58,7 @@ public class ProductService {
 	public ProductDTO update(Long id, ProductDTO dto) {
 		try {
 		Product entity = repository.getOne(id);
-		//entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new ProductDTO(entity);
 		}
@@ -60,6 +66,7 @@ public class ProductService {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
+	
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
@@ -71,5 +78,18 @@ public class ProductService {
 			throw new DataBaseException("Integrity violation");
 		}
 		
+	}
+	private void copyDtoToEntity(ProductDTO dto, Product entity) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setDate(dto.getDate());
+		entity.setImgUrl(dto.getImgUrl());
+		entity.setPrice(dto.getPrice());
+		
+		entity.getCategories().clear();
+		for (CategoryDTO catDto : dto.getCategories()) {
+			Category category = categoryRepository.getOne(catDto.getId());
+			entity.getCategories().add(category);
+		}
 	}
 }
