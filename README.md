@@ -3,10 +3,9 @@ In this Bootcamp the idea is to improve my skills in development and Software Te
 
 ## This project comprises the development of an Web Application and one mobile application from scratch to life. Web application will be available online and the app published in apple store and google store!!!
 
-## Back end part 1 tools and resources -> 
-Java / Spring Boot / Maven / H2 / Postgresql / Postman Spring Data JPA.
-Project -> develop and project in layers (MVC), Web Services REST, DTO, CRUD all operations, exception treatment, Auditing Data and pagination!
-and test the API using Postman.
+## Back end development and testing tools and resources -> 
+Java / Spring Boot / Maven / H2 / Postgresql / Postman / Spring Data JPA / Bean Validation / Spring Security / JWT / OAuth2 / Heroku / Swagger / JPQL / Amazon S3 / SQL / JUnit / mockito / mockBean / Docker / Docer hub / Amazon Ec2 / Amazon RDS / Travis CI / GitHub Actions
+
 
 
 
