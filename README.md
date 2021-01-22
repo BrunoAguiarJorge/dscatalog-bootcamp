@@ -1,5 +1,5 @@
 # Full stack development Bootcamp.
-In this Bootcamp the idea is to improve my skills in development and Software Testing!
+In this Bootcamp the idea is to improve my skills in Software development and Testing!
 
 ## This project comprises the development of an Web Application and one mobile application from scratch to life. Web application will be available online and the app published in apple store and google store!!!
 
