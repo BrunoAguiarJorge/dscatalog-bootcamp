@@ -6,7 +6,12 @@ In this Bootcamp the idea is to improve my skills in development and Software Te
 ## Back end development and testing tools and resources -> 
 Java / Spring Boot / Maven / H2 / Postgresql / Postman / Spring Data JPA / Bean Validation / Spring Security / JWT / OAuth2 / Heroku / Swagger / JPQL / Amazon S3 / SQL / JUnit / mockito / mockBean / Docker / Docer hub / Amazon Ec2 / Amazon RDS / Travis CI / GitHub Actions
 
+## Frond end tools and resouces ->
+HTML / CCS / Javascript / Typescript / ReactJS / Boostrap / Axios / React Router / Loader / UNIX timestamp / Ract Hook Form / Netlify.
 
+## Front Mobile Tools and Resources -> 
+React Native / Expo / Google play / Apple Store.
 
-
-## PROJECT CONCLUDED UNTIL HEAR SO FAR!
+#Author
+Bruno Aguiar
+https://www.linkedin.com/in/brunoaguiarjorge/
