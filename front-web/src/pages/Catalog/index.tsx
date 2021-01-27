@@ -4,20 +4,24 @@ import ProductCard from './components/productcard';
 import './styles.scss'
 import { makeRequest } from '../../core/utils/request';
 import { ProductsResponse } from '../../core/types/Products';
+import ProductCardLoader from '../../core/components/Loaders/ProductCardLoader';
 
 
 const Catalog = () => {
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
-    console.log(productsResponse);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const params = {
             page: 0,
             linesPerPage: 12
         }
-
+        setIsLoading(true)
         makeRequest({ url: '/products', params })
-            .then(response => setProductsResponse(response.data));
+            .then(response => setProductsResponse(response.data))
+            .finally(() => {
+            setIsLoading(false)
+            })
     }, []);
 
     return (
@@ -26,11 +30,13 @@ const Catalog = () => {
                 Catalogo de products
             </h1>
             <div className="catalog-products">
-                {productsResponse?.content.map(product => (
-                <Link to={`/products/${product.id}`} key={product.id}>
-                    <ProductCard product={product} />
-                </Link>
-                ))}
+                {isLoading ? <ProductCardLoader /> : (
+                    productsResponse?.content.map(product => (
+                        <Link to={`/products/${product.id}`} key={product.id}>
+                            <ProductCard product={product} />
+                        </Link>
+                    ))
+                )}
             </div>
         </div>
     );
