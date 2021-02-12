@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -21,8 +22,8 @@ public class UserDTO implements Serializable{
 	 @Email(message = "Favor entrar um email valido")
 	 private String email;
 	
-	 Set<RoleDTO> roles	= new HashSet<>()
-;	 
+	 Set<RoleDTO> roles	= new HashSet<>();	 
+	 
 	 public UserDTO() {
 		 
 	 }
@@ -76,10 +77,12 @@ public class UserDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 
 	public Set<RoleDTO> getRoles() {
 		return roles;
 	}
+	
 	
 	 
 }
