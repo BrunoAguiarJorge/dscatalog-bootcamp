@@ -29,7 +29,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private String clientSecret;
 	
 	@Value("${jwt.duration}")
-	private Integer jwtduration;
+	private Integer jwtDuration;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -59,7 +59,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.secret(passwordEncoder.encode(clientSecret))
 		.scopes("read", "write")
 		.authorizedGrantTypes("password")
-		.accessTokenValiditySeconds(jwtduration);
+		.accessTokenValiditySeconds(jwtDuration);
 		}
 
 	@Override
@@ -74,6 +74,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.tokenEnhancer(chain);
 
 	}
-
-	
 }
