@@ -20,35 +20,36 @@ import com.brunoaguiar.dscatalog.Components.JwtTokenEnhancer;
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Value("${security.oauth2.client.client-id}")
 	private String clientId;
-	
+
 	@Value("${security.oauth2.client.client-secret}")
 	private String clientSecret;
-	
+
 	@Value("${jwt.duration}")
 	private Integer jwtDuration;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private JwtAccessTokenConverter accessTokenConverter;
-	
+
 	@Autowired
 	private JwtTokenStore tokenStore;
-	
+
 	@Autowired
-	private AuthenticationManager authorizationManager;
-	
+	private AuthenticationManager authenticationManager;
+
 	@Autowired
 	private JwtTokenEnhancer tokenEnhancer;
-	
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.tokenKeyAccess("PermitAll");
+		security.tokenKeyAccess("permitAll()")
+		.checkTokenAccess("isAuthenticated()");
 		super.configure(security);
 	}
 
@@ -60,18 +61,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.scopes("read", "write")
 		.authorizedGrantTypes("password")
 		.accessTokenValiditySeconds(jwtDuration);
-		}
+	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		
+
 		TokenEnhancerChain chain = new TokenEnhancerChain();
 		chain.setTokenEnhancers(Arrays.asList(accessTokenConverter, tokenEnhancer));
-		
-		endpoints.authenticationManager(authorizationManager)
+
+		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore)
 		.accessTokenConverter(accessTokenConverter)
 		.tokenEnhancer(chain);
-
 	}
 }

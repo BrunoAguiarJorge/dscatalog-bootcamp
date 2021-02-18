@@ -29,36 +29,35 @@ import com.brunoaguiar.dscatalog.repositories.UserRepository;
 import com.brunoaguiar.dscatalog.resources.exceptions.DataBaseException;
 import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
 
-
-
 @Service
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
 
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	//connect this service class to the categoryRepository class to fetch information from repository class 
+	// connect this service class to the categoryRepository class to fetch
+	// information from repository class
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(PageRequest pageRequest) {
 		Page<User> list = repository.findAll(pageRequest);
-		//Lambda expression that transform list category into categoryDTO
+		// Lambda expression that transform list category into categoryDTO
 		return list.map(x -> new UserDTO(x));
-		
 	}
+
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 		Optional<User> obj = repository.findById(id);
 		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
 		return new UserDTO(entity);
-		
 	}
+
 	@Transactional
 	public UserDTO insert(UserInsertDTO dto) {
 		User entity = new User();
@@ -67,43 +66,41 @@ public class UserService implements UserDetailsService{
 		entity = repository.save(entity);
 		return new UserDTO(entity);
 	}
-	
+
 	@Transactional
 	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
-		User entity = repository.getOne(id);
-		copyDtoToEntity(dto, entity);
-		entity = repository.save(entity);
-		return new UserDTO(entity);
-		}
-		catch (EntityNotFoundException e) {
+			User entity = repository.getOne(id);
+			copyDtoToEntity(dto, entity);
+			entity = repository.save(entity);
+			return new UserDTO(entity);
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
-	
+
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
-		}
-		catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
-		}
-		catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DataBaseException("Integrity violation");
 		}
-		
 	}
+
 	private void copyDtoToEntity(UserDTO dto, User entity) {
 		entity.setFirstName(dto.getFirstName());
 		entity.setLastName(dto.getLastName());
 		entity.setEmail(dto.getEmail());
-		
+
 		entity.getRoles().clear();
 		for (RoleDTO roleDto : dto.getRoles()) {
 			Role role = roleRepository.getOne(roleDto.getId());
 			entity.getRoles().add(role);
 		}
 	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repository.findByEmail(username);
