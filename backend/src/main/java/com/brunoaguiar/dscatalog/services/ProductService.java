@@ -33,8 +33,9 @@ public class ProductService {
 	private CategoryRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
-		Page<Product> list = repository.findAll(pageRequest);
+	public Page<ProductDTO> findAllPaged(Long categoryId, PageRequest pageRequest) {
+		Category category = (categoryId == 0) ? null : categoryRepository.getOne(categoryId);
+		Page<Product> list = repository.find(category, pageRequest);
 		//Lambda expression that transform list category into categoryDTO
 		return list.map(x -> new ProductDTO(x));
 		
@@ -42,6 +43,7 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ProductDTO findById(Long id) {
 		Optional<Product> obj = repository.findById(id);
+		
 		Product entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
 		return new ProductDTO(entity, entity.getCategories());
 		
