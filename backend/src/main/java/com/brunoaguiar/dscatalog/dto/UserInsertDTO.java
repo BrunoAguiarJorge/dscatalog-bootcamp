@@ -3,9 +3,8 @@ package com.brunoaguiar.dscatalog.dto;
 import com.brunoaguiar.dscatalog.services.validation.UserInsertValid;
 
 @UserInsertValid
-public class UserInsertDTO extends UserDTO{
+public class UserInsertDTO extends UserDTO {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	private String password;
@@ -21,6 +20,5 @@ public class UserInsertDTO extends UserDTO{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	 
 
 }

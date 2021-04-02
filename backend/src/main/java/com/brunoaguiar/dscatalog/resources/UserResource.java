@@ -29,58 +29,53 @@ import com.brunoaguiar.dscatalog.services.UserService;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
-	
-	//let resource layer access service layer.
+
+	// let resource layer access service layer.
 	@Autowired
 	private UserService service;
-	
+
 	@GetMapping
-	//create a list with all categories in it! ReuestParam -> used for pagination!
-	public ResponseEntity<Page<UserDTO>> findAll(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	// create a list with all categories in it! ReuestParam -> used for pagination!
+	public ResponseEntity<Page<UserDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
-			@RequestParam(value = "orderBy", defaultValue = "firstName") String orderBy
-			){
-	PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		
+			@RequestParam(value = "orderBy", defaultValue = "firstName") String orderBy) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
 		Page<UserDTO> list = service.findAllPaged(pageRequest);
-		
+
 		return ResponseEntity.ok().body(list);
-	}	
+	}
+
 	@GetMapping(value = "/{id}")
-	//create a list with all categories in it!
-	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+	// create a list with all categories in it!
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		UserDTO dto = service.findById(id);
-		//"ok" return http code 200
+		// "ok" return http code 200
 		return ResponseEntity.ok().body(dto);
-	}	
-	
+	}
+
 	@PostMapping
-	public ResponseEntity<UserDTO> insert(@Valid@RequestBody UserInsertDTO dto){
+	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
 		UserDTO newDto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-		.buildAndExpand(newDto.getId()).toUri();
-		//created return http code 201
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+		// created return http code 201
 		return ResponseEntity.created(uri).body(newDto);
 
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
 		UserDTO newDto = service.update(id, dto);
 		return ResponseEntity.ok().body(newDto);
 
-
 	}
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> delete(@PathVariable Long id){
+	public ResponseEntity<UserDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 
-
 	}
-	
-	
-	
+
 }

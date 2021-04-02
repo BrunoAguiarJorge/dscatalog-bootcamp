@@ -17,33 +17,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_product")
-public class Product implements Serializable{
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	//use this for description to accept long text
+	// use this for description to accept long text
 	@Column(columnDefinition = "TEXT")
-	private	String description;
-	private	Double	price;
+	private String description;
+	private Double price;
 	private String imgUrl;
-	
+
 	// store data in UTC
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE" )
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant date;
 
-	//association categories and products
+	// association categories and products
 	@ManyToMany
-	@JoinTable(name = "tb_product_category",
-		joinColumns = @JoinColumn(name = "product_id"),
-		inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	Set<Category> categories = new HashSet<>();
-	
+
 	public Product() {
 	}
-	
+
 	public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {
 		super();
 		this.id = id;
@@ -53,7 +51,6 @@ public class Product implements Serializable{
 		this.imgUrl = imgUrl;
 		this.date = date;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -102,8 +99,8 @@ public class Product implements Serializable{
 	public void setDate(Instant date) {
 		this.date = date;
 	}
-	
-	public Set<Category> getCategories(){
+
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
@@ -131,9 +128,5 @@ public class Product implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-}
 
+}

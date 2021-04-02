@@ -9,8 +9,8 @@ public class StandardError {
 	private String error;
 	private String message;
 	private String path;
-	
-	public StandardError() {	
+
+	public StandardError() {
 	}
 
 	public Instant getTimestamp() {
@@ -52,6 +52,5 @@ public class StandardError {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
+
 }

@@ -19,28 +19,26 @@ import javax.persistence.Table;
 @Table(name = "tb_category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//Anotations da JPA
+
+	// Anotations da JPA
 	@Id
-	//make the database incrementing
+	// make the database incrementing
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
-	//define the time zone to do the auditing regarding instant of interaction
+
+	// define the time zone to do the auditing regarding instant of interaction
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
-	
+
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
-	
+
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
-	
-	
-	
+
 	public Category() {
-		
+
 	}
 
 	public Category(Long id, String name) {
@@ -63,27 +61,24 @@ public class Category implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
 
-
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
 		updatedAt = Instant.now();
 	}
-
 
 	public Set<Product> getProducts() {
 		return products;
@@ -113,6 +108,5 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }
