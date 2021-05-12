@@ -21,9 +21,6 @@ public class UserDTO implements Serializable {
 
 	Set<RoleDTO> roles = new HashSet<>();
 
-
-	
-	
 	public UserDTO() {
 
 	}
@@ -37,7 +34,6 @@ public class UserDTO implements Serializable {
 	}
 
 	public UserDTO(User entity) {
-
 		id = entity.getId();
 		firstName = entity.getFirstName();
 		lastName = entity.getLastName();

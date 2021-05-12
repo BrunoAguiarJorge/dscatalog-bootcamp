@@ -36,34 +36,33 @@ public class ProductRepotoriesTests {
 
 	}
 
-@Test
-public void findShouldReturnProductsWhenNameExistsIsEmpty() {
+	@Test
+	public void findShouldReturnProductsWhenNameExistsIsEmpty() {
 
-	String name = "";
-	
+		String name = " ";
 
-	Page<Product> result = repository.find(null, name, pageRequest);
+		Page<Product> result = repository.find(null, name, pageRequest);
 
-	Assertions.assertEquals(countPCGamesProducts, result.getTotalElements());
-	Assertions.assertFalse(result.isEmpty());
-}
+		Assertions.assertFalse(result.isEmpty());
+		Assertions.assertEquals(countTotalProducts, result.getTotalElements());
+
+	}
+
 	@Test
 	public void findShouldReturnProductsWhenNameExistsIgnoreCase() {
 
 		String name = "pc gAMer";
-		
 
 		Page<Product> result = repository.find(null, name, pageRequest);
 
 		Assertions.assertEquals(countPCGamesProducts, result.getTotalElements());
 		Assertions.assertFalse(result.isEmpty());
 	}
-	
+
 	@Test
 	public void finishShouldReturnProductsWhenNameExists() {
 
 		String name = "PC Gamer";
-	
 
 		Page<Product> result = repository.find(null, name, pageRequest);
 
