@@ -32,15 +32,14 @@ const Form = () => {
         const payload = {
             ...formData,
             imgUrl: 'https://cdn.vox-cdn.com/thumbor/OUmughYf4RVdlK2Qgpfee9evOP4=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22015056/jbareham_201022_ply1040_ps5_lead_0002.jpg',
-            categories: [{id: formData.category}]
+            categories: [{ id: formData.category }]
         }
-       makeRequest({ url: '/products', method: 'POST', data: payload})
-       .then(() => {
-       setformData({ name: '', category: '', price: '', description: '' });
-    });
-}
-
-
+        makeRequest({ url: '/products', method: 'POST', data: payload })
+            .then(() => {
+                setformData({ name: '', category: '', price: '', description: '' });
+            });
+    }
+    
     return (
         <form onSubmit={handleSubmit}>
             <BaseForm title="cadastrar um produto">
@@ -73,13 +72,13 @@ const Form = () => {
                         />
                     </div>
                     <div className="col-6">
-                        <textarea 
-                        name="description" 
-                        value={formData.description}
-                        onChange={handleOnChange}
-                        className="form-control"
-                        cols={30}
-                        rows={10}
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleOnChange}
+                            className="form-control"
+                            cols={30}
+                            rows={10}
                         >
                         </textarea>
                     </div>
