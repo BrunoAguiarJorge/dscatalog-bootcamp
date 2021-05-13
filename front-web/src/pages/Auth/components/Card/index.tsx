@@ -1,6 +1,7 @@
 import React, { Children } from 'react';
 import './styles.scss';
 
+
 type Props = {
     title: string;
     children: React.ReactNode;

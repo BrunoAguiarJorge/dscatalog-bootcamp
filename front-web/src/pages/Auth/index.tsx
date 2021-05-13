@@ -1,4 +1,4 @@
-import { ReactComponent } from '*.svg';
+
 import React from 'react';
 import './styles.scss';
 import { ReactComponent as AuthImage } from 'core/assets/images/auth.svg'
