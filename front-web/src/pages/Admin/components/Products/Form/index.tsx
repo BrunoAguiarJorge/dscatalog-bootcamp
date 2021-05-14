@@ -1,4 +1,4 @@
-import { makeRequest } from 'core/utils/request';
+import { makePrivateRequest } from 'core/utils/request';
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
@@ -34,7 +34,7 @@ const Form = () => {
             imgUrl: 'https://cdn.vox-cdn.com/thumbor/OUmughYf4RVdlK2Qgpfee9evOP4=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22015056/jbareham_201022_ply1040_ps5_lead_0002.jpg',
             categories: [{ id: formData.category }]
         }
-        makeRequest({ url: '/products', method: 'POST', data: payload })
+        makePrivateRequest({ url: '/products', method: 'POST', data: payload })
             .then(() => {
                 setformData({ name: '', category: '', price: '', description: '' });
             });
