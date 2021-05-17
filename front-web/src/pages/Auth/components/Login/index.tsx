@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import ButtonIcon from 'core/components/ButtonIcon';
 import AuthCard from '../Card';
@@ -10,19 +10,25 @@ import { saveSessionData } from 'core/utils/auth';
 type FormData = {
     username: string;
     password: string;
-    
+}
+
+type LocationState = {
+    from: string;
 }
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [hasError, setHasError] = useState(false);
     const history = useHistory();
+    let location = useLocation<LocationState>();
+
+    const { from } = location.state || { from: { pathname: "/admin" } };
 
     const onSubmit = (data: FormData) => {
         makeLogin(data)
             .then(response => {
                 setHasError(false);
                 saveSessionData(response.data);
-                history.push('/admin');
+                history.replace(from);
             })
             .catch(() => {
                 setHasError(true);
@@ -39,12 +45,13 @@ const Login = () => {
                         type="email"
                         className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
                         placeholder="Email"
-                        {...register('username', { required: "Field required", 
+                        {...register('username', {
+                            required: "Field required",
                             pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: "Invalid email"
-                        } 
-                    })}
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Invalid email"
+                            }
+                        })}
                     />
                     {errors.username && (
                         <div className="invalid-feedback d-block">
@@ -61,10 +68,10 @@ const Login = () => {
                     />
                     {errors.password && (
                         <div className="invalid-feedback d-block">
-                           {errors.password.message}
+                            {errors.password.message}
                         </div>
                     )}
-               </div>
+                </div>
                 <Link to="/admin/auth/recover" className="login-link-recover">
                     Forgot password?
                </Link>
