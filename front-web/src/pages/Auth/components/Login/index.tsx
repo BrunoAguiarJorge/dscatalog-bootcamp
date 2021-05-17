@@ -72,19 +72,19 @@ const Login = () => {
                         </div>
                     )}
                 </div>
-                <Link to="/admin/auth/recover" className="login-link-recover">
+                <Link to="/auth/recover" className="login-link-recover">
                     Forgot password?
                </Link>
                 <div className="login-submit">
-                    <ButtonIcon text="Logar" />
+                    <ButtonIcon text="Login" />
                 </div>
                 <div className="text-center">
                     <span className="not-registered">
                         Not registered?
                    </span>
-                    <Link to="/admin/auth/register" className="login-link-register">
+                    <Link to="/auth/register" className="login-link-register">
                         Register
-               </Link>
+                    </Link>
                 </div>
             </form>
         </AuthCard>
