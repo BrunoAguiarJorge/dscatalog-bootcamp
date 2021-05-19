@@ -10,7 +10,7 @@ const Auth = () => (
     <div className="auth-container">
         <div className="auth-info">
             <h1 className="auth-info-title">
-                Divulgue seus produtos no <br /> DS Catalog
+                Publish yours products at <br /> Bruno's Catalog
             </h1>
             <p className="auth-info-subtitle">
                 Faca parte do nosso catalogo de divulgacao <br /> e aumente a venda dos seus produtos
