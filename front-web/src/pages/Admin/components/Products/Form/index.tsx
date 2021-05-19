@@ -1,86 +1,61 @@
 import { makePrivateRequest } from 'core/utils/request';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
 
 type FormState = {
     name: string;
     price: string;
-    category: string;
     description: string;
+    imageUrl: string;
 }
 
-type FormEvent = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
-
 const Form = () => {
-    const [formData, setformData] = useState<FormState>({
-        name: '',
-        price: '',
-        category: '1',
-        description: ''
-    });
-
-    const handleOnChange = (event: FormEvent) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        setformData(data => ({ ...data, [name]: value }));
+    const { register, handleSubmit } = useForm<FormState>();
+   
+    const onSubmit = (data: FormState) => {
+       makePrivateRequest({ url: '/products', method: 'POST', data });
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const payload = {
-            ...formData,
-            imgUrl: 'https://cdn.vox-cdn.com/thumbor/OUmughYf4RVdlK2Qgpfee9evOP4=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22015056/jbareham_201022_ply1040_ps5_lead_0002.jpg',
-            categories: [{ id: formData.category }]
-        }
-        makePrivateRequest({ url: '/products', method: 'POST', data: payload })
-            .then(() => {
-                setformData({ name: '', category: '', price: '', description: '' });
-            });
-    }
-    
     return (
-        <form onSubmit={handleSubmit}>
-            <BaseForm title="cadastrar um produto">
-
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <BaseForm title="Register a product">
                 <div className="row">
                     <div className="col-6">
                         <input
-                            value={formData.name}
+                            {...register({ required: "Field required" })}
                             name="name"
                             type="text"
-                            className="form-control mb-5"
-                            onChange={handleOnChange}
-                            placeholder="Nome do Product"
+                            className="form-control margin-botton-30 input-base"
+                            placeholder="Product name"
                         />
-                        <select value={formData.category}
-                            className="form-control mb-5"
-                            onChange={handleOnChange}
-                            name="category">
-                            <option value="1">Livros</option>
-                            <option value="3">Computadores</option>
-                            <option value="2">Eletronics</option>
-                        </select>
+
                         <input
-                            value={formData.price}
+                            {...register({ required: "Field required" })}
                             name="price"
+                            type="number"
+                            className="form-control margin-botton-30 input-base"
+                            placeholder="Price"
+                        />
+
+                        <input
+                            {...register({ required: "Field required" })}
+                            name="imageUrl"
                             type="text"
-                            className="form-control"
-                            onChange={handleOnChange}
-                            placeholder="preco"
+                            className="form-control margin-botton-30 input-base"
+                            placeholder="Product image"
                         />
                     </div>
                     <div className="col-6">
                         <textarea
+                            {...register({ required: "Field required" })}
                             name="description"
-                            value={formData.description}
-                            onChange={handleOnChange}
-                            className="form-control"
+                            className="form-control input-base"
+                            placeholder="Description"
                             cols={30}
                             rows={10}
-                        >
-                        </textarea>
+                        />
                     </div>
                 </div>
             </ BaseForm>
