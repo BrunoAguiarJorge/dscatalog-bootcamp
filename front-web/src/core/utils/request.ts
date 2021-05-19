@@ -53,5 +53,5 @@ export const makeLogin = (loginData: LoginData) => {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     const payload = qs.stringify({ ...loginData, grant_type: 'password' });
-    return makeRequest({ url: '/oauth/token', data: payload, method: 'POST', headers });
+    return makeRequest({ url: '/auth/token', data: payload, method: 'POST', headers });
 }
