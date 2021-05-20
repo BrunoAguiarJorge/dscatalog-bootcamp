@@ -1,6 +1,7 @@
 import axios, { Method } from 'axios';
 import qs from 'qs';
 import { CLIENT_ID, CLIENT_SECRET, getSessionData, logout } from './auth';
+import history from './history';
 
 type RequestParams = {
     method?: Method;
@@ -17,7 +18,7 @@ type LoginData = {
 
 const BASE_URL = 'http://localhost:8080';
 
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function(response) {
     return response;
 }, function (error): Promise<never> {
     if (error.response.status === 401) {
@@ -52,6 +53,7 @@ export const makeLogin = (loginData: LoginData) => {
         Authorization: `Basic ${window.btoa(token)}`,
         'Content-Type': 'application/x-www-form-urlencoded'
     }
+
     const payload = qs.stringify({ ...loginData, grant_type: 'password' });
-    return makeRequest({ url: '/auth/token', data: payload, method: 'POST', headers });
+    return makeRequest({ url: '/oauth/token', data: payload, method: 'POST', headers });
 }

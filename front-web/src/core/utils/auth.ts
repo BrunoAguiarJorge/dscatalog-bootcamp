@@ -10,7 +10,7 @@ type LoginResponse = {
     expires_in: number;
     scope: string;
     userFirstName: string;
-    userId: number
+    userId: number;
 }
 export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
 
@@ -24,9 +24,9 @@ export const saveSessionData = (loginResponse: LoginResponse) => {
 }
 
 export const getSessionData = () => {
-    const sessionData = localStorage.getItem('authData') ?? '{}';
-    const parseSessionData = JSON.parse(sessionData);
-    return parseSessionData as LoginResponse;
+    const sessionData = localStorage.getItem('authData') || '{}';
+    const parsedSessionData = JSON.parse(sessionData);
+    return parsedSessionData as LoginResponse;
 }
 
 export const getAccessTokenDecode = () => {
@@ -61,7 +61,7 @@ export const isAllowedByRole = (routeRoles: Role[] = []) => {
     return routeRoles.some(role => authorities?.includes(role));
 }
 
-export const logout = () =>{
+export const logout = () => {
     localStorage.removeItem('authData');
     history.replace('/auth/login');
 }

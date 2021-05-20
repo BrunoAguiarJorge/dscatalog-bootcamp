@@ -16,26 +16,26 @@ type LocationState = {
     from: string;
 }
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormState>();
+    const { register, handleSubmit, errors  } = useForm<FormState>();
     const [hasError, setHasError] = useState(false);
     const history = useHistory();
     let location = useLocation<LocationState>();
 
-    const { from } = location.state || { from: { pathname: "/admin" } };
+    const { from } = location.state || { from: { pathname: '/admin' } };
 
     const onSubmit = (data: FormState) => {
         makeLogin(data)
             .then(response => {
                 setHasError(false);
                 saveSessionData(response.data);
-                history.replace(from);
+                history.push(from);
             })
             .catch(() => {
                 setHasError(true);
             })
     }
     return (
-        <AuthCard title="Login">
+        <AuthCard title="login">
             {hasError && (
             <div className="alert alert-danger mt-5">
                 Username or password invalid!
@@ -47,7 +47,8 @@ const Login = () => {
                         className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
                         placeholder="Email"
                         name="username"
-                        {...register({required: "Field required",
+                        ref={register({
+                            required: "Field required",
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                                 message: "Invalid email"
@@ -64,9 +65,9 @@ const Login = () => {
                     <input
                         type="password"
                         className={`form-control input-base ${errors.password ? 'is-invalid' : ''}`}
-                        placeholder="Senha"
+                        placeholder="Password"
                         name="password"
-                        {...register({ required: "Field required" })}
+                        ref={register({required: "Field required" })}
                     />
                     {errors.password && (
                         <div className="invalid-feedback d-block">
