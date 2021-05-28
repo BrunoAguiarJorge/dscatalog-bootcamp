@@ -23,10 +23,10 @@ const history = useHistory();
                 className="btn btn-outline-danger border-radius-10 mr-3"
                 onClick={handleCancel}
                 > 
-                    cancelar
+                    CANCEL
                 </button>
                 <button className="btn btn-primary border-radius-10"> 
-                    CADASTRAR
+                    REGISTER
                 </button>
             </div>
         </div>

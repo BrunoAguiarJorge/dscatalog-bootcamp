@@ -29,7 +29,7 @@ const ProductDetails = () => {
             <div className="card-base border-radius-10 product-details">
                 <Link to="/products" className="product-details-goback">
                     <ArrowIcon className="icon-goback" />
-                    <h1 className="text-goback">VOLTAR</h1>
+                    <h1 className="text-goback">Products</h1>
                 </Link>
                 <div className="row">
                     <div className="col-6 pr-5">
@@ -49,8 +49,8 @@ const ProductDetails = () => {
                         {isLoading ? <ProductDescriptionLoader /> : (
                             <>
                                 <h1 className="product-description-title">
-                                    Descricao do produto
-                           </h1>
+                                    Product Description
+                                 </h1>
                                 <p className="product-descrption-text">
                                     {product?.description}
                                 </p>

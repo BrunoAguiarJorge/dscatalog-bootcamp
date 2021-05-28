@@ -21,7 +21,7 @@ const Navbar = () => {
         <nav className="row bg-primary main-nav">
             <div className="col-3 ">
                 <Link to="/" className="nav-logo-text">
-                    <h4>DS Catalog</h4>
+                    <h4>DS Catalogue</h4>
                 </Link>
             </div>
             <div className="col-6">
@@ -33,7 +33,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink to="/products" className="nav-link">
-                            CATALOGO
+                            CATALOGUE
                             </NavLink>
                     </li>
                     <li>

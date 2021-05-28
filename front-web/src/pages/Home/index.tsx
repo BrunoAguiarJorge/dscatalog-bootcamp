@@ -8,13 +8,11 @@ const Home = () => (
     <div className="home-container">
         <div className="row home-content card-base border-radius-20">
             <div className="col-6 home-text" >
-                <h1 className="text-title">Conheca o melhor <br /> catalago de products</h1>
-                <p className="text-subtitle">A
-                judaremos você a encontrar os melhores <br />
-                produtos disponíveis no mercado.
+                <h1 className="text-title">Find all eletronics you are looking for in our e-catalogue!</h1>
+                <p className="text-subtitle">Here we help you find the best product for the lowest price.
                 </p>
                 <Link to="/products">
-                    <ButtonIcon text="inicie agora sua busca" />
+                    <ButtonIcon text="Start your search" />
                 </Link>
             </div>
             <div className="col-6">

@@ -29,7 +29,7 @@ const Catalog = () => {
     return (
         <div className="catalag-container">
             <h1 className="catalag-title">
-                Catalogo de products
+                Product's Catalogue
             </h1>
             <div className="catalog-products">
                 {isLoading ? <ProductCardLoader /> : (

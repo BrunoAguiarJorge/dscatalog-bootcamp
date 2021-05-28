@@ -8,18 +8,18 @@ const NavBar = () => (
         <ul>
             <li>
                 <NavLink to="/admin/products" className="admin-nav-item">
-                    Meus Pedidos
+                    My orders
                 </NavLink>
             </li>
             <li>
                 <NavLink to="/admin/categories" className="admin-nav-item">
-                    Minhas categorias
+                    My Categories
                 </NavLink>
             </li>
             {isAllowedByRole(['ROLE_ADMIN']) && (
                 <li>
                 <NavLink to="/admin/users" className="admin-nav-item" >
-                    Meus usuários
+                    Users
                 </NavLink>
             </li>
             )}
