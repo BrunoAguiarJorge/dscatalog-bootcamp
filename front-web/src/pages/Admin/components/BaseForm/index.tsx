@@ -26,7 +26,7 @@ const history = useHistory();
                     CANCEL
                 </button>
                 <button className="btn btn-primary border-radius-10"> 
-                    REGISTER
+                    SAVE
                 </button>
             </div>
         </div>

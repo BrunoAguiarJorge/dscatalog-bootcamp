@@ -8,7 +8,7 @@ const NavBar = () => (
         <ul>
             <li>
                 <NavLink to="/admin/products" className="admin-nav-item">
-                    My orders
+                    My Products
                 </NavLink>
             </li>
             <li>
