@@ -5,13 +5,15 @@ import './styles.scss'
 import { makeRequest } from '../../core/utils/request';
 import { ProductsResponse } from 'core/types/Products';
 import ProductCardLoader from 'core/components/Loaders/ProductCardLoader';
+import ProductFilters from 'core/components/ProductFilters';
 import Pagination from 'core/components/Pagination';
+
 
 
 const Catalog = () => {
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
     const [isLoading, setIsLoading] = useState(false);
-    const [activePage, setActivePage] = useState(0); 
+    const [activePage, setActivePage] = useState(0);
 
     useEffect(() => {
         const params = {
@@ -22,15 +24,19 @@ const Catalog = () => {
         makeRequest({ url: '/products', params })
             .then(response => setProductsResponse(response.data))
             .finally(() => {
-            setIsLoading(false)
+                setIsLoading(false)
             })
     }, [activePage]);
 
     return (
         <div className="catalag-container">
-            <h1 className="catalag-title">
-                Product's Catalogue
+            <div className="d-flex justify-content-between">
+                <h1 className="catalag-title">
+                    Product's Catalogue
             </h1>
+                <ProductFilters />
+            </div>
+
             <div className="catalog-products">
                 {isLoading ? <ProductCardLoader /> : (
                     productsResponse?.content.map(product => (
@@ -40,12 +46,12 @@ const Catalog = () => {
                     ))
                 )}
             </div>
-                    { productsResponse && (
-                    <Pagination 
+            { productsResponse && (
+                <Pagination
                     totalPages={productsResponse.totalPages}
                     activePage={activePage}
-                    onChange={page => setActivePage(page)}/> 
-                    )}
+                    onChange={page => setActivePage(page)} />
+            )}
         </div>
     );
 }
