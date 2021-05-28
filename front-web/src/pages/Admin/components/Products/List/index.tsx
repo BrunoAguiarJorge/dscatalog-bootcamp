@@ -5,6 +5,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import ContentLoader from 'react-content-loader';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CardLoader from '../Loaders/ProductCardLoader';
 import Card from '../Card'
 
 
@@ -56,9 +57,11 @@ const List = () => {
                 ADD
             </button>
             <div className="admin-list-container">
-                {productsResponse?.content.map(product => (
+                {isLoading ? <CardLoader /> : (
+                productsResponse?.content.map(product => (
                     <Card product={product} key={product.id} onRevome={onRemove} />
-                ))}
+                ))
+                )}
                 {productsResponse && (
                     <Pagination
                         totalPages={productsResponse.totalPages}
