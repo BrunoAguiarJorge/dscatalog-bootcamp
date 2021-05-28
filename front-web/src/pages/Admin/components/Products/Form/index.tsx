@@ -1,16 +1,19 @@
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import Select from 'react-select'
+import { useForm, Controller } from 'react-hook-form';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
 import { useHistory, useParams } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Category } from 'core/types/Products';
 
 type FormState = {
     name: string;
     price: string;
     description: string;
     imgUrl: string;
+    categories: Category[];
 }
 
 type ParamsType = {
@@ -18,29 +21,37 @@ type ParamsType = {
 }
 
 const Form = () => {
-    const { register, handleSubmit, errors, setValue } = useForm<FormState>();
+    const { register, handleSubmit, errors, setValue, control } = useForm<FormState>();
     const history = useHistory();
     const { productId } = useParams<ParamsType>();
+    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? 'Edit Product' : 'Register Product'
 
     useEffect(() => {
-        if (isEditing ) {
-        makeRequest({ url: `/products/${productId}` })
-            .then(response => {
-                setValue('name', response.data.name);
-                setValue('price', response.data.price);
-                setValue('description', response.data.description);
-                setValue('imgUrl', response.data.imgUrl);
-            })
+        if (isEditing) {
+            makeRequest({ url: `/products/${productId}` })
+                .then(response => {
+                    setValue('name', response.data.name);
+                    setValue('price', response.data.price);
+                    setValue('description', response.data.description);
+                    setValue('imgUrl', response.data.imgUrl);
+                })
         }
     }, [productId, isEditing, setValue]);
 
+    useEffect(() => {
+        makeRequest({ url: '/categories' })
+            .then(response => setCategories(response.data.content))
+            .finally(() => setIsLoadingCategories(false));
+    }, []);
+
     const onSubmit = (data: FormState) => {
-        makePrivateRequest({ 
-            url: isEditing ? `/products/${productId}` : '/products', 
-            method: isEditing ? 'PUT' : 'POST', 
-            data 
+        makePrivateRequest({
+            url: isEditing ? `/products/${productId}` : '/products',
+            method: isEditing ? 'PUT' : 'POST',
+            data
         })
             .then(() => {
                 toast.info('Product registered successfuly!')
@@ -53,8 +64,8 @@ const Form = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <BaseForm 
-            title={formTitle}>
+            <BaseForm
+                title={formTitle}>
                 <div className="row">
                     <div className="col-6">
                         <div className="margin-botton-30">
@@ -76,6 +87,28 @@ const Form = () => {
                                 </div>
                             )}
                         </div>
+
+                        <div className="margin-botton-30">
+                            <Controller
+                            as={Select}
+                            name="categories"
+                            rules={{ required: true}}
+                                control={control}
+                                isLoading={isLoadingCategories}
+                                options={categories}
+                                getOptionLabel={(option: Category) => option.name}
+                                getOptionValue={(option: Category) => String(option.id)}
+                                classNamePrefix="categories-select"
+                                placeholder="Categories"
+                                isMulti
+                            />
+                             {errors.categories && (
+                                <div className="invalid-feedback d-block">
+                                   Compulsory field 
+                                </div>
+                             )}
+                        </div>
+
                         <div className="margin-botton-30">
                             <input
                                 {...register({ required: "Field required" })}
