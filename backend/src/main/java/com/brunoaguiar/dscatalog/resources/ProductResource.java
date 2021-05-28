@@ -37,7 +37,6 @@ public class ProductResource {
 	public ResponseEntity<Page<ProductDTO>> findAll(
 			@RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
 			@RequestParam(value = "name", defaultValue = "") String name,
-
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -50,11 +49,9 @@ public class ProductResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	// create a list with all categories in it!
-	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+		public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 		ProductDTO dto = service.findById(id);
-		// "ok" return http code 200
-		return ResponseEntity.ok().body(dto);
+			return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping
