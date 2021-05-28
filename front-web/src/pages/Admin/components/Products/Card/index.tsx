@@ -5,8 +5,9 @@ import './styles.scss'
 
 type Props = {
     product: Product;
+    onRevome: (productId: number ) => void;
 }
-const Card = ({ product }: Props) => {
+const Card = ({ product, onRevome }: Props) => {
     return (
         <div className="card-base product-card-admin">
             <div className="row">
@@ -40,7 +41,9 @@ const Card = ({ product }: Props) => {
                     </Link>
                     <button
                         type="button"
-                        className="btn btn-outline-danger btn-block border-radius-10 mb-3 btn-edit">
+                        className="btn btn-outline-danger btn-block border-radius-10"
+                        onClick={()=> onRevome(product.id)}
+                        >
                         DELETE
                     </button>
                 </div>
