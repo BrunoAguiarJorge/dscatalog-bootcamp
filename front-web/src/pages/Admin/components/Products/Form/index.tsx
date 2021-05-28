@@ -44,6 +44,7 @@ const Form = () => {
     }, [productId, isEditing, setValue]);
 
     useEffect(() => {
+        setIsLoadingCategories(true)
         makeRequest({ url: '/categories' })
             .then(response => setCategories(response.data.content))
             .finally(() => setIsLoadingCategories(false));
