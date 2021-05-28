@@ -7,8 +7,9 @@ import './styles.scss';
 import { useHistory, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { Category } from 'core/types/Products';
+import PriceField from './PriceField';
 
-type FormState = {
+export type FormState = {
     name: string;
     price: string;
     description: string;
@@ -37,6 +38,7 @@ const Form = () => {
                     setValue('price', response.data.price);
                     setValue('description', response.data.description);
                     setValue('imgUrl', response.data.imgUrl);
+                    setValue('categories', response.data.categories)
                 })
         }
     }, [productId, isEditing, setValue]);
@@ -90,9 +92,9 @@ const Form = () => {
 
                         <div className="margin-botton-30">
                             <Controller
-                            as={Select}
-                            name="categories"
-                            rules={{ required: true}}
+                                as={Select}
+                                name="categories"
+                                rules={{ required: true }}
                                 control={control}
                                 isLoading={isLoadingCategories}
                                 options={categories}
@@ -100,23 +102,19 @@ const Form = () => {
                                 getOptionValue={(option: Category) => String(option.id)}
                                 classNamePrefix="categories-select"
                                 placeholder="Categories"
+                                inputId="categories"
+                                defaultValue=""
                                 isMulti
                             />
-                             {errors.categories && (
+                            {errors.categories && (
                                 <div className="invalid-feedback d-block">
-                                   Compulsory field 
+                                   Field Required
                                 </div>
-                             )}
+                            )}
                         </div>
 
                         <div className="margin-botton-30">
-                            <input
-                                {...register({ required: "Field required" })}
-                                name="price"
-                                type="number"
-                                className="form-control  input-base"
-                                placeholder="Price"
-                            />
+                           <PriceField control={control} />
                             {errors.price && (
                                 <div className="invalid-feedback d-block">
                                     {errors.price.message}
