@@ -1,7 +1,6 @@
 import axios, { Method } from 'axios';
 import qs from 'qs';
 import { CLIENT_ID, CLIENT_SECRET, getSessionData, logout } from './auth';
-import history from './history';
 
 type RequestParams = {
     method?: Method;
@@ -16,11 +15,11 @@ type LoginData = {
     password: string;
 }
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = process.env.REACT_APP_BACKEND_URL ??  'http://localhost:8080';
 
 axios.interceptors.response.use(function(response) {
     return response;
-}, function (error): Promise<never> {
+}, function (error) {
     if (error.response.status === 401) {
         logout();
     }
