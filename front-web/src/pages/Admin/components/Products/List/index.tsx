@@ -2,7 +2,6 @@ import Pagination from 'core/components/Pagination';
 import { ProductsResponse } from 'core/types/Products';
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
 import React, { useEffect, useState, useCallback } from 'react';
-import ContentLoader from 'react-content-loader';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CardLoader from '../Loaders/ProductCardLoader';
