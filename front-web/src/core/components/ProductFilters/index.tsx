@@ -4,10 +4,22 @@ import Select from 'react-select';
 import { useEffect, useState } from 'react';
 import { makeRequest } from 'core/utils/request';
 import { Category } from 'core/types/Products';
-const ProductFilters = () => {
 
+export type FilterForm = {
+    name?: string;
+    categoryId?: number;
+}
+
+type Props = {
+    onSearch: (filter: FilterForm) => void;
+}
+
+const ProductFilters = ({ onSearch }: Props) => {
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
+    const [name, setName] = useState('');
+    const [category, setCategory] = useState<Category>();
+
     useEffect(() => {
         setIsLoadingCategories(true)
         makeRequest({ url: '/categories' })
@@ -15,19 +27,40 @@ const ProductFilters = () => {
             .finally(() => setIsLoadingCategories(false));
     }, []);
 
+    const handleChangeName = (name: string) => {
+        setName(name);
+        onSearch({ name, categoryId: category?.id })
+    }
+
+    const handleChangeCategory = (category: Category) => {
+        setCategory(category);
+        onSearch({ name, categoryId: category?.id })
+    }
+
+    const clearFilters =() => {
+        setCategory(undefined);
+        setName('');
+        onSearch({ name: '', categoryId: undefined})
+
+    }
+
     return (
         <div className="card-base product-filters-container">
             <div className="input-search">
                 <input
                     type="text"
+                    value={name}
                     className="form-control "
                     placeholder="Search Product"
+                    onChange={event => handleChangeName(event.target.value)}
                 />
 
                 <SearchIcon />
             </div>
             <Select
                 name="categories"
+                key={`select-${category?.id}`}
+                value={category}
                 isLoading={isLoadingCategories}
                 options={categories}
                 getOptionLabel={(option: Category) => option.name}
@@ -36,9 +69,14 @@ const ProductFilters = () => {
                 classNamePrefix="product-categories-select"
                 placeholder="Categories"
                 inputId="categories"
+                onChange={value => handleChangeCategory(value as Category)}
+                isClearable
             />
-            <button className="btn btn-outline-secondary border-radius-10">
-               CLEAR FILTERS
+            <button className="btn btn-outline-secondary border-radius-10"
+            onClick={clearFilters}
+            >
+                CLEAR FILTERS
+                
             </button>
         </div>
     )
