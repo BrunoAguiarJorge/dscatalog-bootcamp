@@ -27,11 +27,11 @@ import com.brunoaguiar.dscatalog.services.CategoryService;
 public class CategoryResource {
 
 	// let resource layer access service layer.
-	@Autowired
+	@Autowired 
 	private CategoryService service;
 
 	@GetMapping
-	// create a list with all categories in it! ReuestParam -> used for pagination!
+	// create a Page with all categories in it! ReuestParam -> used for pagination!
 	public ResponseEntity<Page<CategoryDTO>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
@@ -54,24 +54,21 @@ public class CategoryResource {
 	@PostMapping
 	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
 		dto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
 		// created return http code 201
 		return ResponseEntity.created(uri).body(dto);
-
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CategoryDTO> insert(@PathVariable Long id, @RequestBody CategoryDTO dto) {
+	public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
-
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<CategoryDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
-
 	}
-
 }

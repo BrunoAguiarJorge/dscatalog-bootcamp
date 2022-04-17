@@ -21,9 +21,8 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// Anotations da JPA
-	@Id
-	// make the database incrementing
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // ID Auto-increment
 	private Long id;
 	private String name;
 
@@ -38,7 +37,6 @@ public class Category implements Serializable {
 	private Set<Product> products = new HashSet<>();
 
 	public Category() {
-
 	}
 
 	public Category(Long id, String name) {

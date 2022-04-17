@@ -28,7 +28,6 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-
 	}
 
 	@ExceptionHandler(DataBaseException.class)
@@ -41,7 +40,6 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,7 +56,6 @@ public class ResourceExceptionHandler {
 			err.addError(f.getField(), f.getDefaultMessage());
 		}
 		return ResponseEntity.status(status).body(err);
-
 	}
 
 	@ExceptionHandler(AmazonServiceException.class)
@@ -71,7 +68,6 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-
 	}
 
 	@ExceptionHandler(AmazonClientException.class)
@@ -84,7 +80,6 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
@@ -97,7 +92,5 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-
 	}
-
 }

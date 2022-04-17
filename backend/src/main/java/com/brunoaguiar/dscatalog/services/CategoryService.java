@@ -21,9 +21,7 @@ import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
 @Service
 public class CategoryService {
 
-	// connect this service class to the categoryRepository class to fetch
-	// information from repository class
-	@Autowired
+	@Autowired 	// connect service class to the categoryRepository class to fetch information from repository class
 	private CategoryRepository repository;
 
 	@Transactional(readOnly = true)
@@ -31,7 +29,6 @@ public class CategoryService {
 		Page<Category> list = repository.findAll(pageRequest);
 		// Lambda expression that transform list category into categoryDTO
 		return list.map(x -> new CategoryDTO(x));
-
 	}
 
 	@Transactional(readOnly = true)
@@ -39,7 +36,6 @@ public class CategoryService {
 		Optional<Category> obj = repository.findById(id);
 		Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
 		return new CategoryDTO(entity);
-
 	}
 
 	@Transactional
@@ -70,6 +66,5 @@ public class CategoryService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataBaseException("Integrity violation");
 		}
-
 	}
 }
