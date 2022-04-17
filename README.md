@@ -1,4 +1,4 @@
-# Full stack Bootcamp Java & React.
+# Full Stack Bootcamp Java & React.
 
 
 This project comprises of the development of an Web Application and a mobile application from UML diagrams to the deployment in the cloud using CD/CI. Web application will be available online and the app published in apple store and google store.
