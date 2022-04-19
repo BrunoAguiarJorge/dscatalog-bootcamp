@@ -68,12 +68,12 @@ public class Category implements Serializable {
 		return updatedAt;
 	}
 
-	@PrePersist
+	@PrePersist //save instant at when method save called
 	public void prePersist() {
 		createdAt = Instant.now();
 	}
 
-	@PreUpdate
+	@PreUpdate //save instant when method update called
 	public void preUpdate() {
 		updatedAt = Instant.now();
 	}
@@ -106,5 +106,4 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-
 }
