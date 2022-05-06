@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.brunoaguiar.dscatalog.dto.ProductDTO;
+import com.brunoaguiar.dscatalog.repositories.ProductRepository;
 import com.brunoaguiar.dscatalog.services.ProductService;
 import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
 
@@ -22,8 +23,11 @@ public class ProductServiceIntegration {
 	@Autowired
 	private ProductService service;
 
+	@Autowired
+	private ProductRepository repository;
+	
 	private long existingId;
-	private long NonExistingId;
+	private long nonExistingId;
 	private long countTotalProducts;
 	private long countPCGamesProducts;
 	private PageRequest pageRequest;
@@ -31,7 +35,7 @@ public class ProductServiceIntegration {
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
-		NonExistingId = 1000L;
+		nonExistingId = 1000L;
 		countTotalProducts = 25L;
 		countPCGamesProducts = 21L;
 		pageRequest = PageRequest.of(0, 10);
@@ -41,7 +45,7 @@ public class ProductServiceIntegration {
 	public void deleteShouldThrowResourceNotNotFoundExceptiosWhenIdDoesNotExists() {
 
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.delete(NonExistingId);
+			service.delete(nonExistingId);
 		});
 	}
 
@@ -52,13 +56,20 @@ public class ProductServiceIntegration {
 			service.delete(existingId);
 		});
 	}
+	
+	@Test
+	public void deleteShoulDeleteResourceWhenIdExists() {
+
+			service.delete(existingId);
+			Assertions.assertEquals(countTotalProducts - 1, repository.count());
+	}
 
 	@Test
 	public void findAllPagedShouldReturnNothingWhenNameDoesNotExists() {
 
 		String name = "Camera";
 
-		Page<ProductDTO> result = service.findAllPaged(0L, name, pageRequest);
+		Page<ProductDTO> result = service.findAllPaged(pageRequest);
 
 		Assertions.assertTrue(result.isEmpty());
 	}
@@ -68,11 +79,10 @@ public class ProductServiceIntegration {
 
 		String name = "";
 
-		Page<ProductDTO> result = service.findAllPaged(0L, name, pageRequest);
+		Page<ProductDTO> result = service.findAllPaged(pageRequest);
 
 		Assertions.assertFalse(result.isEmpty());
 		Assertions.assertEquals(countTotalProducts, result.getTotalElements());
-		
 	}
 
 	@Test
@@ -80,7 +90,7 @@ public class ProductServiceIntegration {
 
 		String name = "pc gAMer";
 
-		Page<ProductDTO> result = service.findAllPaged(0L, name, pageRequest);
+		Page<ProductDTO> result = service.findAllPaged(pageRequest);
 
 		Assertions.assertEquals(countPCGamesProducts, result.getTotalElements());
 		Assertions.assertFalse(result.isEmpty());
@@ -91,7 +101,7 @@ public class ProductServiceIntegration {
 
 		String name = "PC Gamer";
 
-		Page<ProductDTO> result = service.findAllPaged(0L, name, pageRequest);
+		Page<ProductDTO> result = service.findAllPaged(pageRequest);
 
 		Assertions.assertEquals(countPCGamesProducts, result.getTotalElements());
 		Assertions.assertFalse(result.isEmpty());
