@@ -1,5 +1,7 @@
 package com.brunoaguiar.dscatalog.tests.repositories;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +35,6 @@ public class ProductRepotoriesTests {
 		countTotalProducts = 25L;
 		countPCGamesProducts = 21L;
 		pageRequest = PageRequest.of(0, 10);
-
 	}
 
 	@Test
@@ -45,7 +46,6 @@ public class ProductRepotoriesTests {
 
 		Assertions.assertFalse(result.isEmpty());
 		Assertions.assertEquals(countTotalProducts, result.getTotalElements());
-
 	}
 
 	@Test
@@ -73,21 +73,22 @@ public class ProductRepotoriesTests {
 	@Test
 	public void saveShouldPersistWithAutoIncrementWhenIdIsNull() {
 
+		//Arrange
 		Product product = ProductFactory.createProduct();
 		product.setId(null);
 
+		//act
 		product = repository.save(product);
 		Optional<Product> result = repository.findById(product.getId());
-
+		
+		//assert
 		Assertions.assertNotNull(product.getId());
 		Assertions.assertEquals(countTotalProducts + 1L, product.getId());
 		Assertions.assertTrue(result.isPresent());
 		Assertions.assertSame(result.get(), product);
-
 	}
 
 	@Test
-
 	public void deleteShouldDeleteObjectWhenIdExists() {
 
 		repository.deleteById(existingId);
@@ -103,5 +104,4 @@ public class ProductRepotoriesTests {
 			repository.deleteById(nonExistingId);
 		});
 	}
-
 }

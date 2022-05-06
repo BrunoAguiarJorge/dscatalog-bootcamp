@@ -45,7 +45,6 @@ public class ProductService {
 		//repository.find(page.toList());
 		// Lambda expression that transform list category into categoryDTO
 		return page.map(x -> new ProductDTO(x, x.getCategories()));
-
 	}
 
 	@Transactional(readOnly = true)

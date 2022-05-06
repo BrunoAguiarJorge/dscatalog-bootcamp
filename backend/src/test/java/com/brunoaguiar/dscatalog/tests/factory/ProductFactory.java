@@ -12,7 +12,7 @@ public class ProductFactory {
 
 		Product product = new Product(1L, "Phoone", "Good Phone", 800.0, "http://img.com/img.png",
 				Instant.parse("2020-10-21T03:00:00Z"));
-		product.getCategories().add(new Category(1L, null));
+		product.getCategories().add(new Category(2L, null));
 		return product;
 	}
 

@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -32,14 +34,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.brunoaguiar.dscatalog.dto.ProductDTO;
+import com.brunoaguiar.dscatalog.resources.ProductResource;
 import com.brunoaguiar.dscatalog.resources.exceptions.DataBaseException;
 import com.brunoaguiar.dscatalog.services.ProductService;
 import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.brunoaguiar.dscatalog.tests.factory.ProductFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(ProductResource.class)
 public class ProductResourceTests {
 
 	@Autowired

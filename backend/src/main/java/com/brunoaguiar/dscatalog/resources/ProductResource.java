@@ -33,12 +33,9 @@ public class ProductResource {
 	private ProductService service;
 
 	@GetMapping
-	// create a list with all categories in it! ReuestParam -> used for pagination!
+	// create a list with all categories in it! RequestParam -> used for pagination!
 	public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable ) {
-		
-
 		Page<ProductDTO> list = service.findAllPaged(pageable);
-
 		return ResponseEntity.ok().body(list);
 	}
 
@@ -54,7 +51,6 @@ public class ProductResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		// created return http code 201
 		return ResponseEntity.created(uri).body(dto);
-
 	}
 
 	/**
@@ -70,14 +66,11 @@ public class ProductResource {
 	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
-
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
-
 	}
-
 }
