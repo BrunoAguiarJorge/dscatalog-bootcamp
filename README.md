@@ -1,7 +1,7 @@
 # Full Stack Bootcamp Java & React.
 
 
-This project comprises of the development of an Web Application and a mobile application from UML diagrams to the deployment in the cloud using CD/CI. Web application will be available online and the app published in apple store and google store.
+This project comprises of the development of an Web Application and a mobile application from UML diagrams to the deployment in the cloud using the latest technoplogies. Web application will be available online and the app published in apple store and google store.
 
 #### Back end development and testing tools and resources:
 
