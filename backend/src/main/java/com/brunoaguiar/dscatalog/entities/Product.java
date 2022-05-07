@@ -34,7 +34,7 @@ public class Product implements Serializable {
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant date;
 
-	// association categories and products
+	// association table categories and products
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", 
 	joinColumns = @JoinColumn(name = "product_id"), 
