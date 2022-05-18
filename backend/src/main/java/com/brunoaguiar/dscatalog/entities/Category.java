@@ -21,7 +21,7 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// Anotations da JPA
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // ID Auto-increment
 	private Long id;
 	private String name;
@@ -68,12 +68,12 @@ public class Category implements Serializable {
 		return updatedAt;
 	}
 
-	@PrePersist //save instant at when method save called
+	@PrePersist // save instant at when method save called
 	public void prePersist() {
 		createdAt = Instant.now();
 	}
 
-	@PreUpdate //save instant when method update called
+	@PreUpdate // save instant when method update called
 	public void preUpdate() {
 		updatedAt = Instant.now();
 	}

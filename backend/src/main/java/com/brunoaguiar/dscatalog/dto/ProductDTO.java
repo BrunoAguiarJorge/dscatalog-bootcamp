@@ -15,7 +15,6 @@ import com.brunoaguiar.dscatalog.entities.Category;
 import com.brunoaguiar.dscatalog.entities.Product;
 
 public class ProductDTO implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -36,8 +35,7 @@ public class ProductDTO implements Serializable {
 
 	private List<CategoryDTO> categories = new ArrayList<>();
 
-	public ProductDTO() {
-	}
+	public ProductDTO() {}
 
 	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
 		super();
@@ -51,12 +49,12 @@ public class ProductDTO implements Serializable {
 
 	// change it to receive an entity
 	public ProductDTO(Product entity) {
-		this.id = entity.getId();
-		this.name = entity.getName();
-		this.description = entity.getDescription();
-		this.price = entity.getPrice();
-		this.imgUrl = entity.getImgUrl();
-		this.date = entity.getDate();
+		id = entity.getId();
+		name = entity.getName();
+		description = entity.getDescription();
+		price = entity.getPrice();
+		imgUrl = entity.getImgUrl();
+		date = entity.getDate();
 	}
 
 	// overloading receiving products and categories

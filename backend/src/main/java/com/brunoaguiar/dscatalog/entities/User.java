@@ -38,10 +38,9 @@ public class User implements UserDetails, Serializable {
 
 	
 	//Assossiation table user and role
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
-	
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {}
@@ -158,5 +157,4 @@ public class User implements UserDetails, Serializable {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }

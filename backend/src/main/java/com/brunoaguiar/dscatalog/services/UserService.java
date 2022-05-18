@@ -31,9 +31,9 @@ import com.brunoaguiar.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService {
-
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
+	//@bean created at appconfig for ecrypting password
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	// connect this service class to the categoryRepository class to fetch
