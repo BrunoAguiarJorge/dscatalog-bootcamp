@@ -45,12 +45,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		// h2 db
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
-
 		}
 
-		http.authorizeRequests().antMatchers(PUBLIC).permitAll().antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN)
-				.permitAll().antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN").antMatchers(ADMIN)
-				.hasRole("ADMIN").anyRequest().authenticated();
+		http.authorizeRequests()
+		.antMatchers(PUBLIC).permitAll()
+		.antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
+		.antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
+		.antMatchers(ADMIN).hasRole("ADMIN").anyRequest().authenticated();
 
 		http.cors().configurationSource(corsConfigurationSource());
 	}
